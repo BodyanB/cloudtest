@@ -20,10 +20,14 @@ public class MainActivity extends Activity {
     private EditText mPasswordField;
     private Button mLoginBtn;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        {
+            if (getIntent().getBooleanExtra("finish", false)) finish();
+        }
         mAuth = FirebaseAuth.getInstance();
         mEmailField = (EditText)findViewById(R.id.emailField);
         mPasswordField = (EditText)findViewById(R.id.passwordField);
@@ -32,7 +36,9 @@ public class MainActivity extends Activity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() != null) {
+                    Toast.makeText(MainActivity.this, "Sign in ", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(MainActivity.this, AccountActivity.class));
+
                 }
             }
         };
@@ -71,4 +77,5 @@ public class MainActivity extends Activity {
         }
 
     }
+
 }
